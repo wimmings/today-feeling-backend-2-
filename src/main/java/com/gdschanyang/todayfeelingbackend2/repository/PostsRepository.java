@@ -8,9 +8,5 @@ import java.util.Optional;
 
 public interface PostsRepository extends JpaRepository<FeelingPost, Long> {
 
-    FeelingPost save(FeelingPost posts);
 
-    Optional<FeelingPost> findById(Long id);
-
-    List<FeelingPost> findAll();
 }

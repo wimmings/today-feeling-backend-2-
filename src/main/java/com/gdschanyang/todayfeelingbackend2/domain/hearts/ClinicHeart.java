@@ -6,25 +6,39 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Entity
 public class ClinicHeart {
-    // 공감한 유저, 공감한 클리닉 글
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CLINICHEART_ID")
     private Long id;
 
-    // ClinicHeart : User = 1 : n 매핑
-    @OneToMany
-    @JoinColumn(name = "CLINIC_HEART_USER")
-    private List<User> users = new ArrayList<User>();
+    // 2. ClinicHeart : User = n : 1
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
-    // ClinicHeart : ClinicPost = 1 : n 매핑
-    @OneToMany
-    @JoinColumn(name = "CLINIC_HEART_POST")
-    private List<ClinicPost> ClinicPosts = new ArrayList<ClinicPost>();
+    // 3. ClinicHeart : ClinicPost = n : 1
+    @ManyToOne
+    @JoinColumn(name = "CLINICPOST_ID")
+    private ClinicPost clinicPost;
+
+    public void setUser(User user){
+        this.user = user;
+        if(!user.getClinicHearts().contains(this)){
+            user.getClinicHearts().add(this);
+        }
+    }
+
+    public void setClinicPost(ClinicPost clinicPost){
+        this.clinicPost = clinicPost;
+        if(!clinicPost.getClinicHearts().contains(this)){
+            clinicPost.getClinicHearts().add(this);
+        }
+    }
 
 }
