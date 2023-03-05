@@ -2,13 +2,13 @@ package com.gdschanyang.todayfeelingbackend2.domain.hearts;
 
 import com.gdschanyang.todayfeelingbackend2.domain.posts.ClinicPost;
 import com.gdschanyang.todayfeelingbackend2.domain.user.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
 @Entity
 public class ClinicHeart {
 
@@ -27,18 +27,10 @@ public class ClinicHeart {
     @JoinColumn(name = "CLINICPOST_ID")
     private ClinicPost clinicPost;
 
-    public void setUser(User user){
-        this.user = user;
-        if(!user.getClinicHearts().contains(this)){
-            user.getClinicHearts().add(this);
-        }
-    }
-
-    public void setClinicPost(ClinicPost clinicPost){
-        this.clinicPost = clinicPost;
-        if(!clinicPost.getClinicHearts().contains(this)){
-            clinicPost.getClinicHearts().add(this);
-        }
+    @Builder
+    public ClinicHeart() {
+        this.user.addClinicHeart(this);
+        this.clinicPost.addClinicPost(this);
     }
 
 }

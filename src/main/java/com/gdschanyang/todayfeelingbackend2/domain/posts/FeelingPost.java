@@ -1,8 +1,10 @@
 package com.gdschanyang.todayfeelingbackend2.domain.posts;
 
 
+import com.gdschanyang.todayfeelingbackend2.domain.BaseTimeEntity;
 import com.gdschanyang.todayfeelingbackend2.domain.hearts.FeelingHeart;
 import com.gdschanyang.todayfeelingbackend2.domain.user.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,9 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
 @Entity
-public class FeelingPost {
+public class FeelingPost extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,17 +41,16 @@ public class FeelingPost {
     @Column(nullable = false)
     private boolean delFlag; //다시
 
-    public void setUser(User user) {
-        this.user = user;
-        if (!user.getFeelingPosts().contains(this)) {
-            user.getFeelingPosts().add(this);
-        }
+    @Builder
+    public FeelingPost() {
+        this.user.addFeelingPost(this);
     }
 
     public void addFeelingPost(FeelingHeart feelingHeart){
         this.feelingHearts.add(feelingHeart);
-        if(feelingHeart.getFeelingPost() != this){
-            feelingHeart.setFeelingPost(this);
-        }
+    }
+
+    public void update(String content) {
+        this.content = content;
     }
 }

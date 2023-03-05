@@ -2,13 +2,13 @@ package com.gdschanyang.todayfeelingbackend2.domain.hearts;
 
 import com.gdschanyang.todayfeelingbackend2.domain.posts.FeelingPost;
 import com.gdschanyang.todayfeelingbackend2.domain.user.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
 @Entity
 public class FeelingHeart {
 
@@ -27,18 +27,11 @@ public class FeelingHeart {
     @JoinColumn(name = "FEELINGPOST_ID")
     private FeelingPost feelingPost;
 
-    public void setUser(User user){
-        this.user  = user;
-        if(!user.getFeelingHearts().contains(this)){
-            user.getFeelingHearts().add(this);
-        }
+    @Builder
+    public FeelingHeart() {
+        this.user.addFeelingHeart(this);
+        this.feelingPost.addFeelingPost(this);
     }
 
-    public void setFeelingPost(FeelingPost feelingPost){
-        this.feelingPost = feelingPost;
-        if(!feelingPost.getFeelingHearts().contains(this)){
-            feelingPost.getFeelingHearts().add(this);
-        }
-    }
 
 }
