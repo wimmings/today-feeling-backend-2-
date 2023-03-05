@@ -2,6 +2,7 @@ package com.gdschanyang.todayfeelingbackend2.domain.posts;
 
 import com.gdschanyang.todayfeelingbackend2.domain.hearts.ClinicHeart;
 import com.gdschanyang.todayfeelingbackend2.domain.user.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
 @Entity
 public class ClinicPost {
 
@@ -35,17 +35,12 @@ public class ClinicPost {
     @OneToMany(mappedBy = "clinicPost")
     private List<ClinicHeart> clinicHearts = new ArrayList<ClinicHeart>();
 
-    public void setUser(User user) {
-        this.user = user;
-        if (!user.getClinicPosts().contains(this)) {
-            user.getClinicPosts().add(this);
-        }
+    @Builder
+    public ClinicPost() {
+        this.user.addClinicPost(this);
     }
 
     public void addClinicPost(ClinicHeart clinicHeart){
         this.clinicHearts.add(clinicHeart);
-        if(clinicHeart.getClinicPost() != this){
-            clinicHeart.setClinicPost(this);
-        }
     }
 }

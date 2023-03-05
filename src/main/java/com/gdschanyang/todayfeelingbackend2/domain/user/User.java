@@ -1,6 +1,7 @@
 package com.gdschanyang.todayfeelingbackend2.domain.user;
 
 
+import com.gdschanyang.todayfeelingbackend2.domain.BaseTimeEntity;
 import com.gdschanyang.todayfeelingbackend2.domain.hearts.ClinicHeart;
 import com.gdschanyang.todayfeelingbackend2.domain.hearts.FeelingHeart;
 import com.gdschanyang.todayfeelingbackend2.domain.posts.ClinicPost;
@@ -43,27 +44,15 @@ public class User {
 
     public void addFeelingPost(FeelingPost feelingPost) {
         this.feelingPosts.add(feelingPost);
-        if (feelingPost.getUser() != this) {
-            feelingPost.setUser(this);
-        }
     }
 
     public void addFeelingHeart(FeelingHeart feelingHeart){
         this.feelingHearts.add(feelingHeart);
-        if(feelingHeart.getUser() != this){
-            feelingHeart.setUser(this);
-        }
     }
     public void addClinicPost(ClinicPost clinicPost) {
         this.clinicPosts.add(clinicPost);
-        if (clinicPost.getUser() != this) {
-            clinicPost.setUser(this);
-        }
     }
     public void addClinicHeart(ClinicHeart clinicHeart){
         this.clinicHearts.add((clinicHeart));
-        if(clinicHeart.getUser() != this){
-            clinicHeart.setUser(this);
-        }
     }
 }
